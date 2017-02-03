@@ -17,13 +17,11 @@ $(document).ready(function() {
 			icon: image
 		})
 	}
-	var image = {
-		url: "earthquake.png",
-		scaledSize: new google.maps.Size(32, 32),
+	var image ={
+		scaledSize: new google.maps.Size(18, 18),
 		origin: new google.maps.Point(0,0),
 		anchor: new google.maps.Point(0,0)
 	}
-
     $.ajax({
 	  	url: weekly_quakes_endpoint,
 	  	success: onSuccess
@@ -45,6 +43,20 @@ $(document).ready(function() {
 				lat: lati,
 				lng: long
 			}
+			var red = "http://dehayf5mhw1h7.cloudfront.net/wp-content/uploads/sites/404/2016/04/06125833/2000px-Location_dot_red.svg_.png";
+			var yellow = "http://www.clker.com/cliparts/o/b/y/x/Z/c/yellow-dot-hi.png";
+			var orange = "http://www.clker.com/cliparts/W/i/K/w/1/D/glossy-orange-circle-icon-hi.png";
+			var magnitute = item.properties.mag;
+			if (magnitute< 5) {
+				image.url = yellow;
+			}
+			else if(magnitute < 7){
+				image.url = orange;
+			}
+			else{
+				image.url = red;
+			}
+			console.log(magnitute)
 			marker(coor);
 
 
