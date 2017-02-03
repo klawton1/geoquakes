@@ -29,16 +29,18 @@ $(document).ready(function() {
 	  	success: onSuccess
     })
     function onSuccess(json){
-	  	for(var i=0; i<json.features.length;i++){
-			var title = json.features[i].properties.title;
-			var splits =title.split("of")
-			console.log(splits)
-			var time = json.features[i].properties.time;
+	  	json.features.map(function(item){
+			var title = item.properties.title;
+			var splits = title.split("-");
+			var citys = splits[1].split('of');
+			var city = citys.pop();
+			console.log(city)
+			var time = item.properties.time;
 			time = Math.floor((Date.now() - time) / 1000 / 60 / 60);
 
-			$('#info').append(`<p> ${title} / ${time} hours</p>`);
-			var lati = json.features[i].geometry.coordinates[1];
-			var long = json.features[i].geometry.coordinates[0];
+			$('#info').append(`<p> ${city} / ${time} hours</p>`);
+			var lati = item.geometry.coordinates[1];
+			var long = item.geometry.coordinates[0];
 			var coor = {
 				lat: lati,
 				lng: long
@@ -47,6 +49,6 @@ $(document).ready(function() {
 
 
 			//console.log(json.features[i].properties.title);
-		}	
+		})	
     }
 });
